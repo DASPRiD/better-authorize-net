@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      decimal.js:
-        specifier: ^10.6.0
-        version: 10.6.0
       zod:
         specifier: ^4.3.5
         version: 4.3.5
@@ -36,6 +33,9 @@ importers:
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
+      decimal.js:
+        specifier: ^10.6.0
+        version: 10.6.0
       fast-xml-parser:
         specifier: ^5.3.3
         version: 5.3.3
