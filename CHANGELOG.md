@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.1...v1.0.2) (2026-01-21)
+
+
+### Bug Fixes
+
+* mark decimal.js as peer dependency ([90e528e](https://github.com/DASPRiD/better-authorize-net/commit/90e528e9aebc93f9cf81f41587890f5f0b4dba19))
+
 ## [1.0.1](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.0...v1.0.1) (2026-01-21)
 
 
