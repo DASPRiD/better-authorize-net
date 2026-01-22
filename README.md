@@ -62,7 +62,7 @@ const response = await client.paymentTransactions.createTransaction({
   }
 });
 
-console.log("Transaction ID:", response.transId);
+console.log("Transaction ID:", response.transactionResponse.transId);
 ```
 
 ## Usage Examples
