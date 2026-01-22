@@ -1,6 +1,6 @@
 {
   "name": "better-authorize-net",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Better Authorize.Net client for TypeScript and Node.js",
   "author": "Ben Scholzen 'DASPRiD'",
   "keywords": [

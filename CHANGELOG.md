@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.2...v1.0.3) (2026-01-22)
+
+
+### Bug Fixes
+
+* **readme:** fix example ([a343893](https://github.com/DASPRiD/better-authorize-net/commit/a343893c9d9620d9cb049785b9375a6326e1bab6))
+
 ## [1.0.2](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.1...v1.0.2) (2026-01-21)
 
 
