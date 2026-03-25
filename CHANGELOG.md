@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.4...v1.0.5) (2026-03-25)
+
+
+### Bug Fixes
+
+* remove response root key wrapper from API response parsing ([005223e](https://github.com/DASPRiD/better-authorize-net/commit/005223e6dec0a9b352d493919275fef2353cd47e))
+
 ## [1.0.4](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.3...v1.0.4) (2026-03-25)
 
 
