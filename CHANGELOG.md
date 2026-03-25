@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.5...v1.0.6) (2026-03-25)
+
+
+### Bug Fixes
+
+* replace unwrap/maybe-array schemas with array wrap schema ([4bb08ab](https://github.com/DASPRiD/better-authorize-net/commit/4bb08abaa5f9eb14732d8b6b8878341aa1adce55))
+
 ## [1.0.5](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.4...v1.0.5) (2026-03-25)
 
 
