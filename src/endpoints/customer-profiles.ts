@@ -104,7 +104,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "createCustomerProfileResponse",
                 schema: createCustomerProfileResponseSchema,
             },
         });
@@ -128,7 +127,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getCustomerProfileResponse",
                 schema: getCustomerProfileResponseSchema,
             },
         });
@@ -152,7 +150,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getCustomerProfileIdsResponse",
                 schema: getCustomerProfileIdsResponseSchema,
             },
         });
@@ -175,7 +172,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "updateCustomerProfileResponse",
                 schema: updateCustomerProfileResponseSchema,
             },
         });
@@ -199,7 +195,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "deleteCustomerProfileResponse",
                 schema: deleteCustomerProfileResponseSchema,
             },
         });
@@ -223,7 +218,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "createCustomerPaymentProfileResponse",
                 schema: createCustomerPaymentProfileResponseSchema,
             },
         });
@@ -247,7 +241,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getCustomerPaymentProfileResponse",
                 schema: getCustomerPaymentProfileResponseSchema,
             },
         });
@@ -270,7 +263,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "updateCustomerPaymentProfileResponse",
                 schema: updateCustomerPaymentProfileResponseSchema,
             },
         });
@@ -293,7 +285,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "deleteCustomerPaymentProfileResponse",
                 schema: deleteCustomerPaymentProfileResponseSchema,
             },
         });
@@ -317,7 +308,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "validateCustomerPaymentProfileResponse",
                 schema: validateCustomerPaymentProfileResponseSchema,
             },
         });
@@ -340,7 +330,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "createCustomerShippingAddressResponse",
                 schema: createCustomerShippingAddressResponseSchema,
             },
         });
@@ -363,7 +352,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getCustomerShippingAddressResponse",
                 schema: getCustomerShippingAddressResponseSchema,
             },
         });
@@ -386,7 +374,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "updateCustomerShippingAddressResponse",
                 schema: updateCustomerShippingAddressResponseSchema,
             },
         });
@@ -409,7 +396,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "deleteCustomerShippingAddressResponse",
                 schema: deleteCustomerShippingAddressResponseSchema,
             },
         });
@@ -433,7 +419,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "createCustomerProfileTransactionResponse",
                 schema: createCustomerProfileTransactionResponseSchema,
             },
         });
@@ -454,7 +439,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "createCustomerProfileTransactionResponse",
                 schema: createCustomerProfileTransactionResponseSchema,
             },
         });
@@ -477,7 +461,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getCustomerPaymentProfileListResponse",
                 schema: getCustomerPaymentProfileListResponseSchema,
             },
         });
@@ -499,7 +482,6 @@ export class CustomerProfileEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getCustomerPaymentProfileNonceResponse",
                 schema: getCustomerPaymentProfileNonceResponseSchema,
             },
         });

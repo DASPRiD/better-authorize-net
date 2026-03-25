@@ -44,7 +44,6 @@ export class UtilityEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "authenticateTestResponse",
                 schema: authenticateTestResponseSchema,
             },
         });
@@ -63,7 +62,6 @@ export class UtilityEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "isAliveResponse",
                 schema: isAliveResponseSchema,
             },
         });
@@ -84,7 +82,6 @@ export class UtilityEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "updateMerchantDetailsResponse",
                 schema: updateMerchantDetailsResponseSchema,
             },
         });
@@ -105,7 +102,6 @@ export class UtilityEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "sendCustomerTransactionReceiptResponse",
                 schema: sendCustomerTransactionReceiptResponseSchema,
             },
         });

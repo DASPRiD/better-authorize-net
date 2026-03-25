@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 import {
     AcceptSuiteEndpoints,
     ArbSubscriptionEndpoints,
@@ -23,7 +23,6 @@ export type SendParams<TRequest, TResponse> = {
         values: TRequest;
     };
     response: {
-        rootKey: string;
         schema: z.ZodType<TResponse>;
     };
 };
@@ -135,11 +134,7 @@ export class AuthorizeNetClient {
                 throw new AuthorizeNetError(apiResponse.messages.message);
             }
 
-            const responseContainerSchema = z.object({
-                [params.response.rootKey]: params.response.schema,
-            });
-            const responseContainer = responseContainerSchema.parse(json);
-            return responseContainer[params.response.rootKey];
+            return params.response.schema.parse(json);
         };
 
         this.acceptSuite = new AcceptSuiteEndpoints(send);

@@ -60,7 +60,6 @@ export class PaymentTransactionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "createTransactionResponse",
                 schema: createTransactionResponseSchema,
             },
         });
@@ -84,7 +83,6 @@ export class PaymentTransactionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "updateSplitTenderGroupResponse",
                 schema: updateSplitTenderGroupResponseSchema,
             },
         });

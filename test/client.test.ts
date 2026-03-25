@@ -91,21 +91,19 @@ describe("AuthorizeNetClient", () => {
                 resultCode: "Ok",
                 message: [{ code: "I00001", text: "Successful" }],
             },
-            createTransactionResponse: {
-                transactionResponse: {
-                    responseCode: "1",
-                    authCode: "ABC123",
-                    avsResultCode: "Y",
-                    transId: "123456",
-                    refTransID: "",
-                    transHash: "hash",
-                    testRequest: "0",
-                    accountNumber: "XXXX1234",
-                    accountType: "Visa",
-                    messages: { message: [] },
-                    userFields: { userField: [] },
-                    transHashSha2: "",
-                },
+            transactionResponse: {
+                responseCode: "1",
+                authCode: "ABC123",
+                avsResultCode: "Y",
+                transId: "123456",
+                refTransID: "",
+                transHash: "hash",
+                testRequest: "0",
+                accountNumber: "XXXX1234",
+                accountType: "Visa",
+                messages: { message: [] },
+                userFields: { userField: [] },
+                transHashSha2: "",
             },
         });
 
@@ -131,9 +129,7 @@ describe("AuthorizeNetClient", () => {
                     resultCode: "Ok",
                     message: [{ code: "I00001", text: "Successful." }],
                 },
-                getTransactionListResponse: {
-                    totalNumInResultSet: 5,
-                },
+                totalNumInResultSet: 5,
             }),
             headers: { "Content-Type": "application/json" },
         });

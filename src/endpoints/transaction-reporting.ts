@@ -67,7 +67,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getTransactionDetailsResponse",
                 schema: getTransactionDetailsResponseSchema,
             },
         });
@@ -91,7 +90,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getUnsettledTransactionListResponse",
                 schema: getUnsettledTransactionListResponseSchema,
             },
         });
@@ -114,7 +112,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getTransactionListResponse",
                 schema: getTransactionListResponseSchema,
             },
         });
@@ -137,7 +134,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getTransactionListResponse",
                 schema: getTransactionListResponseSchema,
             },
         });
@@ -161,7 +157,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getBatchStatisticsResponse",
                 schema: getBatchStatisticsResponseSchema,
             },
         });
@@ -186,7 +181,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getSettledBatchListResponse",
                 schema: getSettledBatchListResponseSchema,
             },
         });
@@ -210,7 +204,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getMerchantDetailsResponse",
                 schema: getMerchantDetailsResponseSchema,
             },
         });
@@ -232,7 +225,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getAuJobSummaryResponse",
                 schema: getAuJobSummaryResponseSchema,
             },
         });
@@ -254,7 +246,6 @@ export class TransactionReportingEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getAuJobDetailsResponse",
                 schema: getAuJobDetailsResponseSchema,
             },
         });

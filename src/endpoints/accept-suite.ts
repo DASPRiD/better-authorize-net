@@ -47,7 +47,6 @@ export class AcceptSuiteEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "securePaymentContainerResponse",
                 schema: securePaymentContainerResponseSchema,
             },
         });
@@ -69,7 +68,6 @@ export class AcceptSuiteEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "decryptPaymentDataResponse",
                 schema: decryptPaymentDataResponseSchema,
             },
         });
@@ -93,7 +91,6 @@ export class AcceptSuiteEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getHostedPaymentPageResponse",
                 schema: getHostedPaymentPageResponseSchema,
             },
         });
@@ -118,7 +115,6 @@ export class AcceptSuiteEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "getHostedProfilePageResponse",
                 schema: getHostedProfilePageResponseSchema,
             },
         });

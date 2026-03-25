@@ -57,7 +57,6 @@ export class ArbSubscriptionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "ARBCreateSubscriptionResponse",
                 schema: arbCreateSubscriptionResponseSchema,
             },
         });
@@ -81,7 +80,6 @@ export class ArbSubscriptionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "ARBGetSubscriptionResponse",
                 schema: arbGetSubscriptionResponseSchema,
             },
         });
@@ -105,7 +103,6 @@ export class ArbSubscriptionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "ARBGetSubscriptionStatusResponse",
                 schema: arbGetSubscriptionStatusResponseSchema,
             },
         });
@@ -129,7 +126,6 @@ export class ArbSubscriptionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "ARBGetSubscriptionListResponse",
                 schema: arbGetSubscriptionListResponseSchema,
             },
         });
@@ -153,7 +149,6 @@ export class ArbSubscriptionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "ARBUpdateSubscriptionResponse",
                 schema: arbUpdateSubscriptionResponseSchema,
             },
         });
@@ -176,7 +171,6 @@ export class ArbSubscriptionEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "ARBCancelSubscriptionResponse",
                 schema: arbCancelSubscriptionResponseSchema,
             },
         });

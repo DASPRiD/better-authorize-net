@@ -37,7 +37,6 @@ export class FraudManagementEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "updateHeldTransactionResponse",
                 schema: updateHeldTransactionResponseSchema,
             },
         });

@@ -59,7 +59,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "mobileDeviceLoginResponse",
                 schema: mobileDeviceLoginResponseSchema,
             },
         });
@@ -80,7 +79,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "mobileDeviceLoginPinResponse",
                 schema: mobileDeviceLoginPinResponseSchema,
             },
         });
@@ -102,7 +100,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "mobileDeviceLoginVerifyPinResponse",
                 schema: mobileDeviceLoginVerifyPinResponseSchema,
             },
         });
@@ -124,7 +121,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "mobileDeviceLoginVerifyChallengeResponse",
                 schema: mobileDeviceLoginVerifyChallengeResponseSchema,
             },
         });
@@ -145,7 +141,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "mobileDeviceMfaLoginResponse",
                 schema: mobileDeviceMfaLoginResponseSchema,
             },
         });
@@ -167,7 +162,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "mobileDeviceRegistrationResponse",
                 schema: mobileDeviceRegistrationResponseSchema,
             },
         });
@@ -187,7 +181,6 @@ export class MobileInAppEndpoints {
                 values: params,
             },
             response: {
-                rootKey: "logoutResponse",
                 schema: logoutResponseSchema,
             },
         });
