@@ -117,8 +117,13 @@ export class AuthorizeNetClient {
                     Accept: "application/json",
                 },
                 body: JSON.stringify({
-                    ...baseRequestBody,
-                    [params.request.rootKey]: params.request.schema.encode(params.request.values),
+                    [params.request.rootKey]: {
+                        ...baseRequestBody,
+                        ...(params.request.schema.encode(params.request.values) as Record<
+                            string,
+                            unknown
+                        >),
+                    },
                 }),
             });
 

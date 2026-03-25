@@ -59,7 +59,7 @@ describe("AuthorizeNetClient", () => {
 
         const calls = fetchMock.calls();
         const requestBody = JSON.parse(calls[0][1]?.body as string);
-        assert.deepEqual(requestBody.merchantAuthentication, {
+        assert.deepEqual(requestBody.authenticateTestRequest.merchantAuthentication, {
             name: "test_merchant",
             transactionKey: "test_key",
         });
