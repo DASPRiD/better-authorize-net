@@ -77,15 +77,13 @@ describe("PaymentTransactionEndpoints", () => {
                             testRequest: "0",
                             accountNumber: "XXXX0015",
                             accountType: "Mastercard",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
-                            userFields: { userField: [] },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
+                            userFields: [],
                             transHashSha2: "",
                             SupplementalDataQualificationIndicator: 0,
                             networkTransId: "123456789012345",
@@ -163,15 +161,13 @@ describe("PaymentTransactionEndpoints", () => {
                             testRequest: "0",
                             accountNumber: "XXXX1111",
                             accountType: "Visa",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
-                            userFields: { userField: [] },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
+                            userFields: [],
                             transHashSha2: "",
                             SupplementalDataQualificationIndicator: 0,
                         },
@@ -235,15 +231,13 @@ describe("PaymentTransactionEndpoints", () => {
                             testRequest: "0",
                             accountNumber: "XXXX0015",
                             accountType: "Mastercard",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
-                            userFields: { userField: [] },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
+                            userFields: [],
                             transHashSha2: "",
                             SupplementalDataQualificationIndicator: 0,
                         },
@@ -319,15 +313,13 @@ describe("PaymentTransactionEndpoints", () => {
                             testRequest: "0",
                             accountNumber: "XXXX0015",
                             accountType: "Mastercard",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
-                            userFields: { userField: [] },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
+                            userFields: [],
                             transHashSha2: "",
                             SupplementalDataQualificationIndicator: 0,
                         },
@@ -389,15 +381,13 @@ describe("PaymentTransactionEndpoints", () => {
                             testRequest: "0",
                             accountNumber: "XXXX0015",
                             accountType: "",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
-                            userFields: { userField: [] },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
+                            userFields: [],
                             transHashSha2: "",
                             SupplementalDataQualificationIndicator: 0,
                         },
@@ -474,14 +464,12 @@ describe("PaymentTransactionEndpoints", () => {
                             transHash: "E385C13A873EC470BB9AD7C2C9D02D13",
                             accountNumber: "XXXX0015",
                             accountType: "Mastercard",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
                         },
                     },
                     expectedDecoded: {
@@ -573,14 +561,12 @@ describe("PaymentTransactionEndpoints", () => {
                             transHash: "803D51FDF65043182BF264B8BAA8B2DF",
                             accountNumber: "XXXXX6789",
                             accountType: "eCheck",
-                            messages: {
-                                message: [
-                                    {
-                                        code: "1",
-                                        description: "This transaction has been approved.",
-                                    },
-                                ],
-                            },
+                            messages: [
+                                {
+                                    code: "1",
+                                    description: "This transaction has been approved.",
+                                },
+                            ],
                         },
                     },
                     expectedDecoded: {

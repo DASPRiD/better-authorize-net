@@ -32,8 +32,7 @@ The core of this library is auto-generated Zod schemas derived from Authorize.Ne
 
 Custom Zod codec utilities that handle Authorize.Net's XML-over-JSON quirks:
 - `decimalSchema` / `integerSchema` - JSON numbers arrive as strings (via custom reviver) to avoid precision loss, then get decoded to `Decimal` or `number`
-- `createMaybeArraySchema` - Authorize.Net sends single-element arrays as bare objects; this normalizes them to always be arrays
-- `createUnwrapSchema` - Unwraps wrapper objects with a single array property into just the array
+- `createArrayWrapSchema` - Authorize.Net's JSON API returns `ArrayOf` types as bare arrays in responses, but expects them wrapped (e.g. `{ "setting": [...] }`) in requests. This codec accepts both formats on parse and always wraps on encode.
 
 ### Client (`src/client.ts`)
 

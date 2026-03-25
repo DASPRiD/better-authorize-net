@@ -101,8 +101,8 @@ describe("AuthorizeNetClient", () => {
                 testRequest: "0",
                 accountNumber: "XXXX1234",
                 accountType: "Visa",
-                messages: { message: [] },
-                userFields: { userField: [] },
+                messages: [],
+                userFields: [],
                 transHashSha2: "",
             },
         });

@@ -356,16 +356,14 @@ describe("ArbSubscriptionEndpoints", () => {
                                 customerAddressId: "1811684122",
                             },
                         },
-                        arbTransactions: {
-                            arbTransaction: [
-                                {
-                                    response: "The credit card has expired.",
-                                    submitTimeUTC: "2017-09-14T18:40:31.247Z",
-                                    payNum: "2",
-                                    attemptNum: "1",
-                                },
-                            ],
-                        },
+                        arbTransactions: [
+                            {
+                                response: "The credit card has expired.",
+                                submitTimeUTC: "2017-09-14T18:40:31.247Z",
+                                payNum: "2",
+                                attemptNum: "1",
+                            },
+                        ],
                     },
                 },
                 expectedDecoded: {

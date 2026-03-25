@@ -3,93 +3,102 @@ import { describe, it } from "node:test";
 import { Decimal } from "decimal.js";
 import { z } from "zod";
 import {
+    createArrayWrapSchema,
     createFractionDigitsCheck,
     createMaxInclusiveCheck,
-    createMaybeArraySchema,
     createMinInclusiveCheck,
     createTotalDigitsCheck,
-    createUnwrapSchema,
     decimalSchema,
     integerSchema,
 } from "../src/schema-helpers.js";
 
 describe("schema-helpers", () => {
-    describe("createMaybeArraySchema", () => {
-        it("should accept a single item and decode to array", () => {
-            const schema = createMaybeArraySchema(z.string(), z.string());
-            const result = schema.parse("test");
-            assert.deepEqual(result, ["test"]);
+    describe("createArrayWrapSchema", () => {
+        it("should decode a bare array", () => {
+            const schema = createArrayWrapSchema(z.string(), z.string(), "item");
+            const result = schema.parse(["a", "b"]);
+            assert.deepEqual(result, ["a", "b"]);
         });
 
-        it("should accept an array and decode to array", () => {
-            const schema = createMaybeArraySchema(z.string(), z.string());
-            const result = schema.parse(["test1", "test2"]);
-            assert.deepEqual(result, ["test1", "test2"]);
+        it("should decode a wrapped object", () => {
+            const schema = createArrayWrapSchema(z.string(), z.string(), "item");
+            const result = schema.parse({ item: ["a", "b"] });
+            assert.deepEqual(result, ["a", "b"]);
         });
 
-        it("should encode array as array", () => {
-            const schema = createMaybeArraySchema(z.string(), z.string());
-            const result = schema.encode(["test1", "test2"]);
-            assert.deepEqual(result, ["test1", "test2"]);
+        it("should decode an empty bare array", () => {
+            const schema = createArrayWrapSchema(z.string(), z.string(), "item");
+            const result = schema.parse([]);
+            assert.deepEqual(result, []);
         });
 
-        it("should default to empty array when min is 0 or undefined", () => {
-            const schema1 = createMaybeArraySchema(z.string(), z.string());
-            const result1 = schema1.parse(undefined);
-            assert.deepEqual(result1, []);
-
-            const schema2 = createMaybeArraySchema(z.string(), z.string(), { min: 0 });
-            const result2 = schema2.parse(undefined);
-            assert.deepEqual(result2, []);
+        it("should decode an empty wrapped array", () => {
+            const schema = createArrayWrapSchema(z.string(), z.string(), "item");
+            const result = schema.parse({ item: [] });
+            assert.deepEqual(result, []);
         });
 
-        it("should enforce min constraint", () => {
-            const schema = createMaybeArraySchema(z.string(), z.string(), { min: 2 });
+        it("should encode array as wrapped object", () => {
+            const schema = createArrayWrapSchema(z.string(), z.string(), "item");
+            const result = schema.encode(["a", "b"]);
+            assert.deepEqual(result, { item: ["a", "b"] });
+        });
 
-            assert.throws(() => schema.parse("test"), {
-                name: "ZodError",
+        it("should work with codec inner schemas", () => {
+            const schema = createArrayWrapSchema(integerSchema, z.number(), "value");
+
+            const decoded = schema.parse(["1", "2", "3"]);
+            assert.deepEqual(decoded, [1, 2, 3]);
+
+            const encoded = schema.encode([1, 2, 3]);
+            assert.deepEqual(encoded, { value: ["1", "2", "3"] });
+        });
+
+        it("should work with complex object schemas", () => {
+            const statisticSchema = z.object({
+                accountType: z.string(),
+                chargeAmount: decimalSchema,
+                chargeCount: integerSchema,
             });
-            assert.throws(() => schema.parse(["test"]), {
-                name: "ZodError",
+            const outputStatisticSchema = z.object({
+                accountType: z.string(),
+                chargeAmount: z.instanceof(Decimal),
+                chargeCount: z.number(),
             });
 
-            const result = schema.parse(["test1", "test2"]);
-            assert.deepEqual(result, ["test1", "test2"]);
-        });
+            const schema = createArrayWrapSchema(
+                statisticSchema,
+                outputStatisticSchema,
+                "statistic",
+            );
 
-        it("should enforce max constraint", () => {
-            const schema = createMaybeArraySchema(z.string(), z.string(), { max: 2 });
+            const input = [
+                {
+                    accountType: "Visa",
+                    chargeAmount: new Decimal("1000.00"),
+                    chargeCount: 5,
+                },
+            ];
 
-            const result1 = schema.parse(["test1", "test2"]);
-            assert.deepEqual(result1, ["test1", "test2"]);
-
-            assert.throws(() => schema.parse(["test1", "test2", "test3"]), {
-                name: "ZodError",
+            const encoded = schema.encode(input);
+            assert.deepEqual(encoded, {
+                statistic: [
+                    {
+                        accountType: "Visa",
+                        chargeAmount: "1000",
+                        chargeCount: "5",
+                    },
+                ],
             });
-        });
 
-        it("should work with complex schemas", () => {
-            const itemSchema = z.object({
-                id: z.number(),
-                name: z.string(),
-            });
-            const outputItemSchema = z.object({
-                id: z.number(),
-                name: z.string(),
-            });
-            const schema = createMaybeArraySchema(itemSchema, outputItemSchema);
-
-            const singleResult = schema.parse({ id: 1, name: "test" });
-            assert.deepEqual(singleResult, [{ id: 1, name: "test" }]);
-
-            const arrayResult = schema.parse([
-                { id: 1, name: "test1" },
-                { id: 2, name: "test2" },
+            const decoded = schema.parse([
+                {
+                    accountType: "Visa",
+                    chargeAmount: "1000.00",
+                    chargeCount: "5",
+                },
             ]);
-            assert.deepEqual(arrayResult, [
-                { id: 1, name: "test1" },
-                { id: 2, name: "test2" },
-            ]);
+            assert.deepEqual(decoded, input);
         });
     });
 
@@ -306,189 +315,6 @@ describe("schema-helpers", () => {
             const result = schema.parse(new Decimal("123"));
             assert.ok(result instanceof Decimal);
             assert.equal(result.toString(), "123");
-        });
-    });
-
-    describe("createUnwrapSchema", () => {
-        it("should decode wrapped object to unwrapped value", () => {
-            const innerSchema = z.string();
-            const outputSchema = z.string();
-            const schema = createUnwrapSchema(innerSchema, outputSchema, "data");
-
-            const result = schema.parse({ data: "test-value" });
-            assert.equal(result, "test-value");
-        });
-
-        it("should encode unwrapped value to wrapped object", () => {
-            const innerSchema = z.string();
-            const outputSchema = z.string();
-            const schema = createUnwrapSchema(innerSchema, outputSchema, "data");
-
-            const result = schema.encode("test-value");
-            assert.deepEqual(result, { data: "test-value" });
-        });
-
-        it("should work with complex inner schemas", () => {
-            const innerSchema = z.object({
-                id: z.number(),
-                name: z.string(),
-            });
-            const outputSchema = z.object({
-                id: z.number(),
-                name: z.string(),
-            });
-            const schema = createUnwrapSchema(innerSchema, outputSchema, "user");
-
-            const result = schema.parse({
-                user: { id: 1, name: "John" },
-            });
-            assert.deepEqual(result, { id: 1, name: "John" });
-
-            const encoded = schema.encode({ id: 1, name: "John" });
-            assert.deepEqual(encoded, {
-                user: { id: 1, name: "John" },
-            });
-        });
-
-        it("should work with array schemas", () => {
-            const innerSchema = z.array(z.string());
-            const outputSchema = z.array(z.string());
-            const schema = createUnwrapSchema(innerSchema, outputSchema, "items");
-
-            const result = schema.parse({
-                items: ["a", "b", "c"],
-            });
-            assert.deepEqual(result, ["a", "b", "c"]);
-
-            const encoded = schema.encode(["a", "b", "c"]);
-            assert.deepEqual(encoded, {
-                items: ["a", "b", "c"],
-            });
-        });
-
-        it("should fail on missing wrapper key", () => {
-            const innerSchema = z.string();
-            const outputSchema = z.string();
-            const schema = createUnwrapSchema(innerSchema, outputSchema, "data");
-
-            assert.throws(() => schema.parse({ wrongKey: "test" }), {
-                name: "ZodError",
-            });
-        });
-    });
-
-    describe("codec composition in createUnwrapSchema", () => {
-        it("should handle codec in object with createUnwrapSchema", () => {
-            const statisticSchema = z.object({
-                accountType: z.string(),
-                chargeAmount: decimalSchema,
-                chargeCount: integerSchema,
-            });
-            const outputStatisticSchema = z.object({
-                accountType: z.string(),
-                chargeAmount: z.instanceof(Decimal),
-                chargeCount: z.number(),
-            });
-
-            const wrappedSchema = createUnwrapSchema(
-                createMaybeArraySchema(statisticSchema, outputStatisticSchema),
-                z.array(outputStatisticSchema),
-                "statistic",
-            );
-
-            const input = [
-                {
-                    accountType: "Visa",
-                    chargeAmount: new Decimal("1000.00"),
-                    chargeCount: 5,
-                },
-            ];
-
-            const encoded = wrappedSchema.encode(input);
-            assert.deepEqual(encoded, {
-                statistic: [
-                    {
-                        accountType: "Visa",
-                        chargeAmount: "1000",
-                        chargeCount: "5",
-                    },
-                ],
-            });
-
-            const decoded = wrappedSchema.parse({
-                statistic: {
-                    accountType: "Visa",
-                    chargeAmount: "1000.00",
-                    chargeCount: "5",
-                },
-            });
-
-            assert.deepEqual(decoded, input);
-        });
-
-        it("should handle codec in nested arrays with createUnwrapSchema", () => {
-            const transactionSchema = z.object({
-                transId: z.string(),
-                submitTimeUTC: z.string(),
-                originalAuthAmount: decimalSchema,
-            });
-            const outputTransactionSchema = z.object({
-                transId: z.string(),
-                submitTimeUTC: z.string(),
-                originalAuthAmount: z.instanceof(Decimal),
-            });
-
-            const wrappedSchema = createUnwrapSchema(
-                createMaybeArraySchema(transactionSchema, outputTransactionSchema),
-                z.array(outputTransactionSchema),
-                "transaction",
-            );
-
-            const input = [
-                {
-                    transId: "12345",
-                    submitTimeUTC: "2023-01-01T00:00:00Z",
-                    originalAuthAmount: new Decimal("50.00"),
-                },
-                {
-                    transId: "67890",
-                    submitTimeUTC: "2023-01-02T00:00:00Z",
-                    originalAuthAmount: new Decimal("75.00"),
-                },
-            ];
-
-            const encoded = wrappedSchema.encode(input);
-            assert.deepEqual(encoded, {
-                transaction: [
-                    {
-                        transId: "12345",
-                        submitTimeUTC: "2023-01-01T00:00:00Z",
-                        originalAuthAmount: "50",
-                    },
-                    {
-                        transId: "67890",
-                        submitTimeUTC: "2023-01-02T00:00:00Z",
-                        originalAuthAmount: "75",
-                    },
-                ],
-            });
-
-            const decoded = wrappedSchema.parse({
-                transaction: [
-                    {
-                        transId: "12345",
-                        submitTimeUTC: "2023-01-01T00:00:00Z",
-                        originalAuthAmount: "50.00",
-                    },
-                    {
-                        transId: "67890",
-                        submitTimeUTC: "2023-01-02T00:00:00Z",
-                        originalAuthAmount: "75.00",
-                    },
-                ],
-            });
-
-            assert.deepEqual(decoded, input);
         });
     });
 });

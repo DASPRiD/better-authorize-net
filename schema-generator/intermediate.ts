@@ -239,25 +239,31 @@ export class ArraySchema implements Schema {
     }
 
     public toInputSchema(): string {
-        const options: string[] = [];
+        let schema = `z.array(${this.inner.toInputSchema()})`;
 
         if (this.min !== undefined && this.min > 0) {
-            options.push(`min: ${this.min}`);
+            schema += `.min(${this.min})`;
         }
 
         if (this.max !== undefined) {
-            options.push(`max: ${this.max}`);
+            schema += `.max(${this.max})`;
         }
 
-        if (options.length === 0) {
-            return `createMaybeArraySchema(${this.inner.toInputSchema()}, ${this.inner.toOutputSchema()})`;
+        if (this.min === undefined || this.min === 0) {
+            schema += `.optional()`;
         }
 
-        return `createMaybeArraySchema(${this.inner.toInputSchema()}, ${this.inner.toOutputSchema()}, {${options.join(", ")}})`;
+        return schema;
     }
 
     public toOutputSchema(): string {
-        return `z.array(${this.inner.toOutputSchema()})`;
+        let schema = `z.array(${this.inner.toOutputSchema()})`;
+
+        if (this.min === undefined || this.min === 0) {
+            schema += `.optional()`;
+        }
+
+        return schema;
     }
 }
 
@@ -288,13 +294,7 @@ export class SequenceSchema implements Schema {
                     return `z.array(${prop.inner.toOutputSchema()})`;
                 }
 
-                return `
-                    createUnwrapSchema(
-                        ${prop.toInputSchema()},
-                        ${prop.toOutputSchema()},
-                        "${key}",
-                    )
-                `;
+                return `createArrayWrapSchema(${prop.inner.toInputSchema()}, ${prop.inner.toOutputSchema()}, "${key}")`;
             }
         }
 

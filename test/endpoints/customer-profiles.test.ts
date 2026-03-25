@@ -52,17 +52,11 @@ describe("CustomerProfileEndpoints", () => {
                     },
                     serverResponse: {
                         customerProfileId: "527262",
-                        customerPaymentProfileIdList: {
-                            numericString: ["86"],
-                        },
-                        customerShippingAddressIdList: {
-                            numericString: [],
-                        },
-                        validationDirectResponseList: {
-                            string: [
-                                "1,1,1,This transaction has been approved.,AJ10K8,Y,10585,none,Test transaction for ValidateCustomerPaymentProfile.,0.00,CC,auth_only,MerchantCustID,Customer FirstName,Customer LastName,,123 Main St.,Bellevue,WA,98004,US,123-123-1235,,customer-profile-email@here.com,,,,,,,,,0.00,0.00,0.00,FALSE,none,675F28BF1C590B17CD2892CD75EC4B67,P,2,,,,,,,,,,,XXXX1111,Visa,,,,,,,0STSMT7WLO5D80U0KJR4Z9A,,,,,,,,,,",
-                            ],
-                        },
+                        customerPaymentProfileIdList: ["86"],
+                        customerShippingAddressIdList: [],
+                        validationDirectResponseList: [
+                            "1,1,1,This transaction has been approved.,AJ10K8,Y,10585,none,Test transaction for ValidateCustomerPaymentProfile.,0.00,CC,auth_only,MerchantCustID,Customer FirstName,Customer LastName,,123 Main St.,Bellevue,WA,98004,US,123-123-1235,,customer-profile-email@here.com,,,,,,,,,0.00,0.00,0.00,FALSE,none,675F28BF1C590B17CD2892CD75EC4B67,P,2,,,,,,,,,,,XXXX1111,Visa,,,,,,,0STSMT7WLO5D80U0KJR4Z9A,,,,,,,,,,",
+                        ],
                     },
                     expectedDecoded: {
                         customerProfileId: "527262",
@@ -115,9 +109,7 @@ describe("CustomerProfileEndpoints", () => {
                         ],
                         shipToList: [],
                     },
-                    subscriptionIds: {
-                        subscriptionId: [],
-                    },
+                    subscriptionIds: [],
                 },
                 expectedDecoded: {
                     profile: {
@@ -226,7 +218,6 @@ describe("CustomerProfileEndpoints", () => {
                             },
                         ],
                         profileType: "regular",
-                        shipToList: [],
                         customerProfileId: "527262",
                         merchantCustomerId: "MerchantCustID",
                         description: "Profile description here",
@@ -246,9 +237,7 @@ describe("CustomerProfileEndpoints", () => {
                     userInput: {},
                     expectedEncoded: {},
                     serverResponse: {
-                        ids: {
-                            numericString: ["47988", "47997", "48458", "48468", "189118", "190178"],
-                        },
+                        ids: ["47988", "47997", "48458", "48468", "189118", "190178"],
                     },
                     expectedDecoded: {
                         ids: ["47988", "47997", "48458", "48468", "189118", "190178"],

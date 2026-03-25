@@ -6,12 +6,11 @@
 import { Decimal } from "decimal.js";
 import { z } from "zod";
 import {
+    createArrayWrapSchema,
     createFractionDigitsCheck,
     createMaxInclusiveCheck,
-    createMaybeArraySchema,
     createMinInclusiveCheck,
     createTotalDigitsCheck,
-    createUnwrapSchema,
     decimalSchema,
     integerSchema,
 } from "./schema-helpers.js";
@@ -28,27 +27,19 @@ export const alphaNumericSpaceStringSchema = z.string().regex(/^[0-9a-zA-Z\s]+$/
 const outputAlphaNumericSpaceStringSchema = z.string();
 export type AlphaNumericSpaceString = z.output<typeof outputAlphaNumericSpaceStringSchema>;
 
-export const arrayOfLongSchema = createUnwrapSchema(
-    createMaybeArraySchema(integerSchema, z.number()),
-    z.array(z.number()),
-    "long",
-);
+export const arrayOfLongSchema = createArrayWrapSchema(integerSchema, z.number(), "long");
 const outputArrayOfLongSchema = z.array(z.number());
 export type ArrayOfLong = z.output<typeof outputArrayOfLongSchema>;
 
-export const arrayOfNumericStringSchema = createUnwrapSchema(
-    createMaybeArraySchema(numericStringSchema, outputNumericStringSchema),
-    z.array(outputNumericStringSchema),
+export const arrayOfNumericStringSchema = createArrayWrapSchema(
+    numericStringSchema,
+    outputNumericStringSchema,
     "numericString",
 );
 const outputArrayOfNumericStringSchema = z.array(outputNumericStringSchema);
 export type ArrayOfNumericString = z.output<typeof outputArrayOfNumericStringSchema>;
 
-export const arrayOfStringSchema = createUnwrapSchema(
-    createMaybeArraySchema(z.string(), z.string()),
-    z.array(z.string()),
-    "string",
-);
+export const arrayOfStringSchema = createArrayWrapSchema(z.string(), z.string(), "string");
 const outputArrayOfStringSchema = z.array(z.string());
 export type ArrayOfString = z.output<typeof outputArrayOfStringSchema>;
 
@@ -126,9 +117,9 @@ const outputLineItemSchema = z.object({
 });
 export type LineItem = z.output<typeof outputLineItemSchema>;
 
-export const arrayOfLineItemSchema = createUnwrapSchema(
-    createMaybeArraySchema(lineItemSchema, outputLineItemSchema),
-    z.array(outputLineItemSchema),
+export const arrayOfLineItemSchema = createArrayWrapSchema(
+    lineItemSchema,
+    outputLineItemSchema,
     "lineItem",
 );
 const outputArrayOfLineItemSchema = z.array(outputLineItemSchema);
@@ -182,9 +173,9 @@ const outputBatchStatisticSchema = z.object({
 });
 export type BatchStatistic = z.output<typeof outputBatchStatisticSchema>;
 
-export const arrayOfBatchStatisticSchema = createUnwrapSchema(
-    createMaybeArraySchema(batchStatisticSchema, outputBatchStatisticSchema),
-    z.array(outputBatchStatisticSchema),
+export const arrayOfBatchStatisticSchema = createArrayWrapSchema(
+    batchStatisticSchema,
+    outputBatchStatisticSchema,
     "statistic",
 );
 const outputArrayOfBatchStatisticSchema = z.array(outputBatchStatisticSchema);
@@ -212,9 +203,9 @@ const outputBatchDetailsSchema = z.object({
 });
 export type BatchDetails = z.output<typeof outputBatchDetailsSchema>;
 
-export const arrayOfBatchDetailsSchema = createUnwrapSchema(
-    createMaybeArraySchema(batchDetailsSchema, outputBatchDetailsSchema),
-    z.array(outputBatchDetailsSchema),
+export const arrayOfBatchDetailsSchema = createArrayWrapSchema(
+    batchDetailsSchema,
+    outputBatchDetailsSchema,
     "batch",
 );
 const outputArrayOfBatchDetailsSchema = z.array(outputBatchDetailsSchema);
@@ -227,9 +218,9 @@ export const subscriptionPaymentSchema = z.object({
 const outputSubscriptionPaymentSchema = z.object({ id: z.number(), payNum: z.number() });
 export type SubscriptionPayment = z.output<typeof outputSubscriptionPaymentSchema>;
 
-export const arrayOfFraudFilterSchema = createUnwrapSchema(
-    createMaybeArraySchema(z.string(), z.string(), { min: 1, max: 1000 }),
-    z.array(z.string()),
+export const arrayOfFraudFilterSchema = createArrayWrapSchema(
+    z.string(),
+    z.string(),
     "fraudFilter",
 );
 const outputArrayOfFraudFilterSchema = z.array(z.string());
@@ -297,9 +288,9 @@ const outputTransactionSummarySchema = z.object({
 });
 export type TransactionSummary = z.output<typeof outputTransactionSummarySchema>;
 
-export const arrayOfTransactionSummarySchema = createUnwrapSchema(
-    createMaybeArraySchema(transactionSummarySchema, outputTransactionSummarySchema),
-    z.array(outputTransactionSummarySchema),
+export const arrayOfTransactionSummarySchema = createArrayWrapSchema(
+    transactionSummarySchema,
+    outputTransactionSummarySchema,
     "transaction",
 );
 const outputArrayOfTransactionSummarySchema = z.array(outputTransactionSummarySchema);
@@ -321,9 +312,9 @@ const outputArbTransactionSchema = z.object({
 });
 export type ArbTransaction = z.output<typeof outputArbTransactionSchema>;
 
-export const arbTransactionListSchema = createUnwrapSchema(
-    createMaybeArraySchema(arbTransactionSchema, outputArbTransactionSchema),
-    z.array(outputArbTransactionSchema),
+export const arbTransactionListSchema = createArrayWrapSchema(
+    arbTransactionSchema,
+    outputArbTransactionSchema,
     "arbTransaction",
 );
 const outputArbTransactionListSchema = z.array(outputArbTransactionSchema);
@@ -339,9 +330,9 @@ const outputSettingSchema = z.object({
 });
 export type Setting = z.output<typeof outputSettingSchema>;
 
-export const arrayOfSettingSchema = createUnwrapSchema(
-    createMaybeArraySchema(settingSchema, outputSettingSchema),
-    z.array(outputSettingSchema),
+export const arrayOfSettingSchema = createArrayWrapSchema(
+    settingSchema,
+    outputSettingSchema,
     "setting",
 );
 const outputArrayOfSettingSchema = z.array(outputSettingSchema);
@@ -351,9 +342,9 @@ export const fdsFilterSchema = z.object({ name: z.string(), action: z.string() }
 const outputFdsFilterSchema = z.object({ name: z.string(), action: z.string() });
 export type FdsFilter = z.output<typeof outputFdsFilterSchema>;
 
-export const arrayOfFdsFilterSchema = createUnwrapSchema(
-    createMaybeArraySchema(fdsFilterSchema, outputFdsFilterSchema),
-    z.array(outputFdsFilterSchema),
+export const arrayOfFdsFilterSchema = createArrayWrapSchema(
+    fdsFilterSchema,
+    outputFdsFilterSchema,
     "FDSFilter",
 );
 const outputArrayOfFdsFilterSchema = z.array(outputFdsFilterSchema);
@@ -363,9 +354,9 @@ export const permissionSchema = z.object({ permissionName: z.string().optional()
 const outputPermissionSchema = z.object({ permissionName: z.string().optional() });
 export type Permission = z.output<typeof outputPermissionSchema>;
 
-export const arrayOfPermissionSchema = createUnwrapSchema(
-    createMaybeArraySchema(permissionSchema, outputPermissionSchema),
-    z.array(outputPermissionSchema),
+export const arrayOfPermissionSchema = createArrayWrapSchema(
+    permissionSchema,
+    outputPermissionSchema,
     "permission",
 );
 const outputArrayOfPermissionSchema = z.array(outputPermissionSchema);
@@ -383,9 +374,9 @@ const outputContactDetailSchema = z.object({
 });
 export type ContactDetail = z.output<typeof outputContactDetailSchema>;
 
-export const arrayOfContactDetailSchema = createUnwrapSchema(
-    createMaybeArraySchema(contactDetailSchema, outputContactDetailSchema),
-    z.array(outputContactDetailSchema),
+export const arrayOfContactDetailSchema = createArrayWrapSchema(
+    contactDetailSchema,
+    outputContactDetailSchema,
     "contactDetail",
 );
 const outputArrayOfContactDetailSchema = z.array(outputContactDetailSchema);
@@ -1340,9 +1331,9 @@ const outputCustomerPaymentProfileBaseSchema = z.object({
 });
 export type CustomerPaymentProfileBase = z.output<typeof outputCustomerPaymentProfileBaseSchema>;
 
-export const subscriptionIdListSchema = createUnwrapSchema(
-    createMaybeArraySchema(numericStringSchema, outputNumericStringSchema),
-    z.array(outputNumericStringSchema),
+export const subscriptionIdListSchema = createArrayWrapSchema(
+    numericStringSchema,
+    outputNumericStringSchema,
     "subscriptionId",
 );
 const outputSubscriptionIdListSchema = z.array(outputNumericStringSchema);
@@ -1640,9 +1631,9 @@ export const transactionRequestSchema = z.object({
     retail: transRetailInfoSchema.optional(),
     employeeId: z.string().optional(),
     transactionSettings: arrayOfSettingSchema.optional(),
-    userFields: createUnwrapSchema(
-        createMaybeArraySchema(userFieldSchema, outputUserFieldSchema, { max: 20 }),
-        z.array(outputUserFieldSchema),
+    userFields: createArrayWrapSchema(
+        userFieldSchema,
+        outputUserFieldSchema,
         "userField",
     ).optional(),
     surcharge: extendedAmountSchema.optional(),
@@ -1811,18 +1802,15 @@ export type CustomerPaymentProfileEx = z.output<typeof outputCustomerPaymentProf
 
 export const customerProfileSchema = customerProfileBaseSchema.and(
     z.object({
-        paymentProfiles: createMaybeArraySchema(
-            customerPaymentProfileSchema,
-            outputCustomerPaymentProfileSchema,
-        ),
-        shipToList: createMaybeArraySchema(customerAddressSchema, outputCustomerAddressSchema),
+        paymentProfiles: z.array(customerPaymentProfileSchema).optional(),
+        shipToList: z.array(customerAddressSchema).optional(),
         profileType: customerProfileTypeSchema.optional(),
     }),
 );
 const outputCustomerProfileSchema = outputCustomerProfileBaseSchema.and(
     z.object({
-        paymentProfiles: z.array(outputCustomerPaymentProfileSchema),
-        shipToList: z.array(outputCustomerAddressSchema),
+        paymentProfiles: z.array(outputCustomerPaymentProfileSchema).optional(),
+        shipToList: z.array(outputCustomerAddressSchema).optional(),
         profileType: outputCustomerProfileTypeSchema.optional(),
     }),
 );
@@ -1838,18 +1826,15 @@ export type CustomerProfileInfoEx = z.output<typeof outputCustomerProfileInfoExS
 
 export const customerProfileMaskedSchema = customerProfileExSchema.and(
     z.object({
-        paymentProfiles: createMaybeArraySchema(
-            customerPaymentProfileMaskedSchema,
-            outputCustomerPaymentProfileMaskedSchema,
-        ),
-        shipToList: createMaybeArraySchema(customerAddressExSchema, outputCustomerAddressExSchema),
+        paymentProfiles: z.array(customerPaymentProfileMaskedSchema).optional(),
+        shipToList: z.array(customerAddressExSchema).optional(),
         profileType: customerProfileTypeSchema.optional(),
     }),
 );
 const outputCustomerProfileMaskedSchema = outputCustomerProfileExSchema.and(
     z.object({
-        paymentProfiles: z.array(outputCustomerPaymentProfileMaskedSchema),
-        shipToList: z.array(outputCustomerAddressExSchema),
+        paymentProfiles: z.array(outputCustomerPaymentProfileMaskedSchema).optional(),
+        shipToList: z.array(outputCustomerAddressExSchema).optional(),
         profileType: outputCustomerProfileTypeSchema.optional(),
     }),
 );
@@ -1862,14 +1847,14 @@ export const profileTransAmountSchema = z.object({
     tax: extendedAmountSchema.optional(),
     shipping: extendedAmountSchema.optional(),
     duty: extendedAmountSchema.optional(),
-    lineItems: createMaybeArraySchema(lineItemSchema, outputLineItemSchema, { max: 30 }),
+    lineItems: z.array(lineItemSchema).max(30).optional(),
 });
 const outputProfileTransAmountSchema = z.object({
     amount: z.instanceof(Decimal),
     tax: outputExtendedAmountSchema.optional(),
     shipping: outputExtendedAmountSchema.optional(),
     duty: outputExtendedAmountSchema.optional(),
-    lineItems: z.array(outputLineItemSchema),
+    lineItems: z.array(outputLineItemSchema).optional(),
 });
 export type ProfileTransAmount = z.output<typeof outputProfileTransAmountSchema>;
 
@@ -2015,9 +2000,9 @@ const outputReturnedItemSchema = z.object({
 });
 export type ReturnedItem = z.output<typeof outputReturnedItemSchema>;
 
-export const arrayOfReturnedItemSchema = createUnwrapSchema(
-    createMaybeArraySchema(returnedItemSchema, outputReturnedItemSchema),
-    z.array(outputReturnedItemSchema),
+export const arrayOfReturnedItemSchema = createArrayWrapSchema(
+    returnedItemSchema,
+    outputReturnedItemSchema,
     "returnedItem",
 );
 const outputArrayOfReturnedItemSchema = z.array(outputReturnedItemSchema);
@@ -2082,13 +2067,9 @@ export const transactionDetailsSchema = z.object({
     customerSignature: z.string().optional(),
     returnedItems: arrayOfReturnedItemSchema.optional(),
     solution: solutionSchema.optional(),
-    emvDetails: createUnwrapSchema(
-        createMaybeArraySchema(
-            z.object({ tagId: z.string(), data: z.string() }),
-            z.object({ tagId: z.string(), data: z.string() }),
-            { min: 1 },
-        ),
-        z.array(z.object({ tagId: z.string(), data: z.string() })),
+    emvDetails: createArrayWrapSchema(
+        z.object({ tagId: z.string(), data: z.string() }),
+        z.object({ tagId: z.string(), data: z.string() }),
         "tag",
     ).optional(),
     profile: customerProfileIdSchema.optional(),
@@ -2187,65 +2168,44 @@ export const transactionResponseSchema = z.object({
             balanceOnCard: z.string().optional(),
         })
         .optional(),
-    messages: createUnwrapSchema(
-        createMaybeArraySchema(
-            z.object({ code: z.string().optional(), description: z.string().optional() }),
-            z.object({ code: z.string().optional(), description: z.string().optional() }),
-        ),
-        z.array(z.object({ code: z.string().optional(), description: z.string().optional() })),
+    messages: createArrayWrapSchema(
+        z.object({ code: z.string().optional(), description: z.string().optional() }),
+        z.object({ code: z.string().optional(), description: z.string().optional() }),
         "message",
     ).optional(),
-    errors: createUnwrapSchema(
-        createMaybeArraySchema(
-            z.object({ errorCode: z.string().optional(), errorText: z.string().optional() }),
-            z.object({ errorCode: z.string().optional(), errorText: z.string().optional() }),
-        ),
-        z.array(z.object({ errorCode: z.string().optional(), errorText: z.string().optional() })),
+    errors: createArrayWrapSchema(
+        z.object({ errorCode: z.string().optional(), errorText: z.string().optional() }),
+        z.object({ errorCode: z.string().optional(), errorText: z.string().optional() }),
         "error",
     ).optional(),
-    splitTenderPayments: createUnwrapSchema(
-        createMaybeArraySchema(
-            z.object({
-                transId: z.string().optional(),
-                responseCode: z.string().optional(),
-                responseToCustomer: z.string().optional(),
-                authCode: z.string().optional(),
-                accountNumber: z.string().optional(),
-                accountType: z.string().optional(),
-                requestedAmount: z.string().optional(),
-                approvedAmount: z.string().optional(),
-                balanceOnCard: z.string().optional(),
-            }),
-            z.object({
-                transId: z.string().optional(),
-                responseCode: z.string().optional(),
-                responseToCustomer: z.string().optional(),
-                authCode: z.string().optional(),
-                accountNumber: z.string().optional(),
-                accountType: z.string().optional(),
-                requestedAmount: z.string().optional(),
-                approvedAmount: z.string().optional(),
-                balanceOnCard: z.string().optional(),
-            }),
-        ),
-        z.array(
-            z.object({
-                transId: z.string().optional(),
-                responseCode: z.string().optional(),
-                responseToCustomer: z.string().optional(),
-                authCode: z.string().optional(),
-                accountNumber: z.string().optional(),
-                accountType: z.string().optional(),
-                requestedAmount: z.string().optional(),
-                approvedAmount: z.string().optional(),
-                balanceOnCard: z.string().optional(),
-            }),
-        ),
+    splitTenderPayments: createArrayWrapSchema(
+        z.object({
+            transId: z.string().optional(),
+            responseCode: z.string().optional(),
+            responseToCustomer: z.string().optional(),
+            authCode: z.string().optional(),
+            accountNumber: z.string().optional(),
+            accountType: z.string().optional(),
+            requestedAmount: z.string().optional(),
+            approvedAmount: z.string().optional(),
+            balanceOnCard: z.string().optional(),
+        }),
+        z.object({
+            transId: z.string().optional(),
+            responseCode: z.string().optional(),
+            responseToCustomer: z.string().optional(),
+            authCode: z.string().optional(),
+            accountNumber: z.string().optional(),
+            accountType: z.string().optional(),
+            requestedAmount: z.string().optional(),
+            approvedAmount: z.string().optional(),
+            balanceOnCard: z.string().optional(),
+        }),
         "splitTenderPayment",
     ).optional(),
-    userFields: createUnwrapSchema(
-        createMaybeArraySchema(userFieldSchema, outputUserFieldSchema, { max: 20 }),
-        z.array(outputUserFieldSchema),
+    userFields: createArrayWrapSchema(
+        userFieldSchema,
+        outputUserFieldSchema,
         "userField",
     ).optional(),
     shipTo: nameAndAddressSchema.optional(),
@@ -2259,11 +2219,7 @@ export const transactionResponseSchema = z.object({
     emvResponse: z
         .object({
             tlvData: z.string().optional(),
-            tags: createUnwrapSchema(
-                createMaybeArraySchema(emvTagSchema, outputEmvTagSchema, { min: 1 }),
-                z.array(outputEmvTagSchema),
-                "tag",
-            ).optional(),
+            tags: createArrayWrapSchema(emvTagSchema, outputEmvTagSchema, "tag").optional(),
         })
         .optional(),
     transHashSha2: z.string().optional(),
@@ -2371,24 +2327,12 @@ const outputANetApiRequestSchema = z.object({
 });
 export type ANetApiRequest = z.output<typeof outputANetApiRequestSchema>;
 
-export const emailSettingsSchema = z.codec(
-    z.object({
-        setting: createMaybeArraySchema(settingSchema, outputSettingSchema),
-        version: integerSchema.optional(),
-    }),
-    z.object({
-        items: z.array(outputSettingSchema),
-        version: z.number().optional(),
-    }),
-    {
-        decode: ({ setting, version }) => ({ items: setting, version }),
-        encode: ({ items, version }) => ({ setting: items, version }),
-    },
+export const emailSettingsSchema = createArrayWrapSchema(
+    settingSchema,
+    outputSettingSchema,
+    "setting",
 );
-const outputEmailSettingsSchema = z.object({
-    items: z.array(outputSettingSchema),
-    version: z.number().optional(),
-});
+const outputEmailSettingsSchema = z.array(outputSettingSchema);
 export type EmailSettings = z.output<typeof outputEmailSettingsSchema>;
 
 export const messageTypeSchema = z.enum(["Ok", "Error"]);
@@ -2397,11 +2341,7 @@ export type MessageType = z.output<typeof outputMessageTypeSchema>;
 
 export const messagesSchema = z.object({
     resultCode: messageTypeSchema,
-    message: createMaybeArraySchema(
-        z.object({ code: z.string(), text: z.string() }),
-        z.object({ code: z.string(), text: z.string() }),
-        { min: 1 },
-    ),
+    message: z.array(z.object({ code: z.string(), text: z.string() })).min(1),
 });
 const outputMessagesSchema = z.object({
     resultCode: outputMessageTypeSchema,
@@ -2448,11 +2388,11 @@ export type ArbCreateSubscriptionRequest = z.output<
 >;
 
 export const arbCreateSubscriptionResponseSchema = z.object({
-    subscriptionId: numericStringSchema.optional(),
+    subscriptionId: numericStringSchema,
     profile: customerProfileIdSchema.optional(),
 });
 const outputArbCreateSubscriptionResponseSchema = z.object({
-    subscriptionId: outputNumericStringSchema.optional(),
+    subscriptionId: outputNumericStringSchema,
     profile: outputCustomerProfileIdSchema.optional(),
 });
 export type ArbCreateSubscriptionResponse = z.output<
@@ -2528,13 +2468,13 @@ export type CreateCustomerProfileRequest = z.output<
 >;
 
 export const createCustomerProfileResponseSchema = z.object({
-    customerProfileId: numericStringSchema.optional(),
+    customerProfileId: numericStringSchema,
     customerPaymentProfileIdList: arrayOfNumericStringSchema,
     customerShippingAddressIdList: arrayOfNumericStringSchema,
     validationDirectResponseList: arrayOfStringSchema,
 });
 const outputCreateCustomerProfileResponseSchema = z.object({
-    customerProfileId: outputNumericStringSchema.optional(),
+    customerProfileId: outputNumericStringSchema,
     customerPaymentProfileIdList: outputArrayOfNumericStringSchema,
     customerShippingAddressIdList: outputArrayOfNumericStringSchema,
     validationDirectResponseList: outputArrayOfStringSchema,
@@ -2572,13 +2512,13 @@ export type CreateCustomerPaymentProfileRequest = z.output<
 >;
 
 export const createCustomerPaymentProfileResponseSchema = z.object({
-    customerProfileId: numericStringSchema.optional(),
-    customerPaymentProfileId: numericStringSchema.optional(),
+    customerProfileId: numericStringSchema,
+    customerPaymentProfileId: numericStringSchema,
     validationDirectResponse: z.string().max(2048).optional(),
 });
 const outputCreateCustomerPaymentProfileResponseSchema = z.object({
-    customerProfileId: outputNumericStringSchema.optional(),
-    customerPaymentProfileId: outputNumericStringSchema.optional(),
+    customerProfileId: outputNumericStringSchema,
+    customerPaymentProfileId: outputNumericStringSchema,
     validationDirectResponse: z.string().optional(),
 });
 export type CreateCustomerPaymentProfileResponse = z.output<
@@ -2648,11 +2588,11 @@ const outputGetCustomerProfileRequestSchema = z.object({
 export type GetCustomerProfileRequest = z.output<typeof outputGetCustomerProfileRequestSchema>;
 
 export const getCustomerProfileResponseSchema = z.object({
-    profile: customerProfileMaskedSchema.optional(),
+    profile: customerProfileMaskedSchema,
     subscriptionIds: subscriptionIdListSchema.optional(),
 });
 const outputGetCustomerProfileResponseSchema = z.object({
-    profile: outputCustomerProfileMaskedSchema.optional(),
+    profile: outputCustomerProfileMaskedSchema,
     subscriptionIds: outputSubscriptionIdListSchema.optional(),
 });
 export type GetCustomerProfileResponse = z.output<typeof outputGetCustomerProfileResponseSchema>;
@@ -2674,10 +2614,10 @@ export type GetCustomerPaymentProfileRequest = z.output<
 >;
 
 export const getCustomerPaymentProfileResponseSchema = z.object({
-    paymentProfile: customerPaymentProfileMaskedSchema.optional(),
+    paymentProfile: customerPaymentProfileMaskedSchema,
 });
 const outputGetCustomerPaymentProfileResponseSchema = z.object({
-    paymentProfile: outputCustomerPaymentProfileMaskedSchema.optional(),
+    paymentProfile: outputCustomerPaymentProfileMaskedSchema,
 });
 export type GetCustomerPaymentProfileResponse = z.output<
     typeof outputGetCustomerPaymentProfileResponseSchema
@@ -2697,12 +2637,12 @@ export type GetCustomerShippingAddressRequest = z.output<
 
 export const getCustomerShippingAddressResponseSchema = z.object({
     defaultShippingAddress: z.boolean().optional(),
-    address: customerAddressExSchema.optional(),
+    address: customerAddressExSchema,
     subscriptionIds: subscriptionIdListSchema.optional(),
 });
 const outputGetCustomerShippingAddressResponseSchema = z.object({
     defaultShippingAddress: z.boolean().optional(),
-    address: outputCustomerAddressExSchema.optional(),
+    address: outputCustomerAddressExSchema,
     subscriptionIds: outputSubscriptionIdListSchema.optional(),
 });
 export type GetCustomerShippingAddressResponse = z.output<
@@ -3374,9 +3314,9 @@ const outputSubscriptionDetailSchema = z.object({
 });
 export type SubscriptionDetail = z.output<typeof outputSubscriptionDetailSchema>;
 
-export const arrayOfSubscriptionSchema = createUnwrapSchema(
-    createMaybeArraySchema(subscriptionDetailSchema, outputSubscriptionDetailSchema),
-    z.array(outputSubscriptionDetailSchema),
+export const arrayOfSubscriptionSchema = createArrayWrapSchema(
+    subscriptionDetailSchema,
+    outputSubscriptionDetailSchema,
     "subscriptionDetail",
 );
 const outputArrayOfSubscriptionSchema = z.array(outputSubscriptionDetailSchema);
@@ -3503,12 +3443,9 @@ export type CustomerPaymentProfileListItem = z.output<
     typeof outputCustomerPaymentProfileListItemSchema
 >;
 
-export const arrayOfCustomerPaymentProfileListItemSchema = createUnwrapSchema(
-    createMaybeArraySchema(
-        customerPaymentProfileListItemSchema,
-        outputCustomerPaymentProfileListItemSchema,
-    ),
-    z.array(outputCustomerPaymentProfileListItemSchema),
+export const arrayOfCustomerPaymentProfileListItemSchema = createArrayWrapSchema(
+    customerPaymentProfileListItemSchema,
+    outputCustomerPaymentProfileListItemSchema,
     "paymentProfile",
 );
 const outputArrayOfCustomerPaymentProfileListItemSchema = z.array(
@@ -3580,9 +3517,9 @@ const outputAuResponseSchema = z.object({
 });
 export type AuResponse = z.output<typeof outputAuResponseSchema>;
 
-export const arrayOfAuResponseSchema = createUnwrapSchema(
-    createMaybeArraySchema(auResponseSchema, outputAuResponseSchema),
-    z.array(outputAuResponseSchema),
+export const arrayOfAuResponseSchema = createArrayWrapSchema(
+    auResponseSchema,
+    outputAuResponseSchema,
     "auResponse",
 );
 const outputArrayOfAuResponseSchema = z.array(outputAuResponseSchema);
@@ -3677,19 +3614,15 @@ export const currencyCodeSchema = z.string().min(3).max(3);
 const outputCurrencyCodeSchema = z.string();
 export type CurrencyCode = z.output<typeof outputCurrencyCodeSchema>;
 
-export const arrayOfCurrencyCodeSchema = createUnwrapSchema(
-    createMaybeArraySchema(currencyCodeSchema, outputCurrencyCodeSchema),
-    z.array(outputCurrencyCodeSchema),
+export const arrayOfCurrencyCodeSchema = createArrayWrapSchema(
+    currencyCodeSchema,
+    outputCurrencyCodeSchema,
     "currency",
 );
 const outputArrayOfCurrencyCodeSchema = z.array(outputCurrencyCodeSchema);
 export type ArrayOfCurrencyCode = z.output<typeof outputArrayOfCurrencyCodeSchema>;
 
-export const arrayOfCardSchema = createUnwrapSchema(
-    createMaybeArraySchema(z.string(), z.string(), { max: 30 }),
-    z.array(z.string()),
-    "cardType",
-);
+export const arrayOfCardSchema = createArrayWrapSchema(z.string(), z.string(), "cardType");
 const outputArrayOfCardSchema = z.array(z.string());
 export type ArrayOfCard = z.output<typeof outputArrayOfCardSchema>;
 
@@ -3705,9 +3638,9 @@ const outputProcessorSchema = z.object({
 });
 export type Processor = z.output<typeof outputProcessorSchema>;
 
-export const arrayOfProcessorSchema = createUnwrapSchema(
-    createMaybeArraySchema(processorSchema, outputProcessorSchema),
-    z.array(outputProcessorSchema),
+export const arrayOfProcessorSchema = createArrayWrapSchema(
+    processorSchema,
+    outputProcessorSchema,
     "processor",
 );
 const outputArrayOfProcessorSchema = z.array(outputProcessorSchema);
@@ -3717,9 +3650,9 @@ export const marketSchema = z.string().max(50);
 const outputMarketSchema = z.string();
 export type Market = z.output<typeof outputMarketSchema>;
 
-export const arrayOfMarketSchema = createUnwrapSchema(
-    createMaybeArraySchema(marketSchema, outputMarketSchema),
-    z.array(outputMarketSchema),
+export const arrayOfMarketSchema = createArrayWrapSchema(
+    marketSchema,
+    outputMarketSchema,
     "marketType",
 );
 const outputArrayOfMarketSchema = z.array(outputMarketSchema);
@@ -3729,9 +3662,9 @@ export const productCodeSchema = z.string().max(3);
 const outputProductCodeSchema = z.string();
 export type ProductCode = z.output<typeof outputProductCodeSchema>;
 
-export const arrayOfProductCodeSchema = createUnwrapSchema(
-    createMaybeArraySchema(productCodeSchema, outputProductCodeSchema),
-    z.array(outputProductCodeSchema),
+export const arrayOfProductCodeSchema = createArrayWrapSchema(
+    productCodeSchema,
+    outputProductCodeSchema,
     "productCode",
 );
 const outputArrayOfProductCodeSchema = z.array(outputProductCodeSchema);
@@ -3769,9 +3702,9 @@ const outputPaymentMethodsTypeSchema = z.enum([
 ]);
 export type PaymentMethodsType = z.output<typeof outputPaymentMethodsTypeSchema>;
 
-export const arrayOfPaymentMethodSchema = createUnwrapSchema(
-    createMaybeArraySchema(paymentMethodsTypeSchema, outputPaymentMethodsTypeSchema),
-    z.array(outputPaymentMethodsTypeSchema),
+export const arrayOfPaymentMethodSchema = createArrayWrapSchema(
+    paymentMethodsTypeSchema,
+    outputPaymentMethodsTypeSchema,
     "paymentMethod",
 );
 const outputArrayOfPaymentMethodSchema = z.array(outputPaymentMethodsTypeSchema);

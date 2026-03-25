@@ -418,28 +418,12 @@ const createComplexContentSchema = (node: XsdNode): Schema => {
         const attributeNode = childNode.children[0];
 
         if (baseSchema instanceof RefSchema && baseSchema.name.type === "ArrayOfSetting" && attributeNode.attributes.name === "version") {
-            // This is the only occurrence where attributes are merged into a
-            // base schema. Instead of bloating up the generator, we opt for
-            // manually handling it here.
-            const inputSchema = `z.object({
-                setting: createMaybeArraySchema(settingSchema, outputSettingSchema),
-                version: integerSchema.optional(),
-            })`;
-            const outputSchema = `z.object({
-                items: z.array(outputSettingSchema),
-                version: z.number().optional(),
-            })`;
-
+            // EmailSettingsType extends ArrayOfSetting with a version attribute.
+            // The official SDK ignores version in JSON (emailSettings is a bare
+            // array like all ArrayOf types), so we treat it the same way.
             return new CustomSchema(
-                `z.codec(
-                    ${inputSchema},
-                    ${outputSchema},
-                    {
-                        decode: ({setting, version}) => ({items: setting, version}),
-                        encode: ({items, version}) => ({setting: items, version}),
-                    },
-                )`,
-                outputSchema,
+                `createArrayWrapSchema(settingSchema, outputSettingSchema, "setting")`,
+                `z.array(outputSettingSchema)`,
             );
         }
 
@@ -641,8 +625,7 @@ const generateSchemas = async (outputPath: string): Promise<void> => {
         'import { z } from "zod";',
         'import { Decimal } from "decimal.js";',
         "import {",
-        "    createUnwrapSchema,",
-        "    createMaybeArraySchema,",
+        "    createArrayWrapSchema,",
         "    integerSchema,",
         "    decimalSchema,",
         "    createMinInclusiveCheck,",

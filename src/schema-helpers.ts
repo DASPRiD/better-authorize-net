@@ -1,42 +1,37 @@
 import { Decimal } from "decimal.js";
 import { z } from "zod";
 
-export type MaybeArrayOptions = {
-    min?: number;
-    max?: number;
-};
+export const createArrayWrapSchema = <ItemInput, ItemOutput, Key extends string>(
+    itemInputSchema: z.ZodType<ItemInput>,
+    itemOutputSchema: z.ZodType<ItemOutput>,
+    innerKey: Key,
+): z.ZodCodec<
+    z.ZodUnion<
+        readonly [
+            z.ZodObject<Record<Key, z.ZodArray<z.ZodType<ItemInput>>>>,
+            z.ZodArray<z.ZodType<ItemInput>>,
+        ]
+    >,
+    z.ZodArray<z.ZodType<ItemOutput>>
+> => {
+    const arrayInputSchema = z.array(itemInputSchema);
+    const wrapperSchema = z.object({
+        [innerKey]: arrayInputSchema,
+    } as Record<Key, z.ZodArray<z.ZodType<ItemInput>>>);
+    const inputSchema = z.union([wrapperSchema, arrayInputSchema]);
+    const outputSchema = z.array(itemOutputSchema);
 
-export const createMaybeArraySchema = <TInput, TOutput>(
-    inputItemSchema: z.ZodType<TInput>,
-    outputItemSchema: z.ZodType<TOutput, TInput>,
-    options?: MaybeArrayOptions,
-): z.ZodCodec<z.ZodType<TInput | TInput[]>, z.ZodType<TOutput[], TInput[]>> => {
-    let inputArraySchema: z.ZodType<TInput[]> = z.array(inputItemSchema);
-
-    if (options?.min !== undefined && options.min > 0) {
-        inputArraySchema = (inputArraySchema as unknown as z.ZodArray<z.ZodType<TInput>>).min(
-            options.min,
-        );
-    }
-
-    if (options?.max !== undefined) {
-        inputArraySchema = (inputArraySchema as unknown as z.ZodArray<z.ZodType<TInput>>).max(
-            options.max,
-        );
-    }
-
-    if (options?.min === undefined || options.min === 0) {
-        inputArraySchema = inputArraySchema.default([]);
-    }
-
-    const inputSchema: z.ZodType<TInput | TInput[]> =
-        options?.min !== undefined && options.min > 1
-            ? inputArraySchema
-            : z.union([inputArraySchema, inputItemSchema]);
-
-    return z.codec(inputSchema, z.array(outputItemSchema) as z.ZodType<TOutput[], TInput[]>, {
-        decode: (value) => (Array.isArray(value) ? value : [value]),
-        encode: (value) => value,
+    return z.codec(inputSchema, outputSchema, {
+        decode: (value): ItemInput[] => {
+            if (Array.isArray(value)) {
+                return value;
+            }
+            return value[innerKey as unknown as keyof typeof value] as ItemInput[];
+        },
+        encode: (value): z.output<typeof wrapperSchema> =>
+            ({
+                [innerKey]: value,
+            }) as z.output<typeof wrapperSchema>,
     });
 };
 
@@ -112,22 +107,3 @@ export const createFractionDigitsCheck =
             });
         }
     };
-
-export const createUnwrapSchema = <InnerInput, Output, Key extends string>(
-    innerInputSchema: z.ZodType<InnerInput>,
-    outputSchema: z.ZodType<Output, InnerInput>,
-    innerKey: Key,
-): z.ZodCodec<z.ZodObject<Record<Key, z.ZodType<InnerInput>>>, z.ZodType<Output, InnerInput>> => {
-    const wrapperSchema = z.object({
-        [innerKey]: innerInputSchema,
-    } as Record<Key, z.ZodType<InnerInput>>);
-
-    return z.codec(wrapperSchema, outputSchema, {
-        decode: (value: z.output<typeof wrapperSchema>): z.input<typeof outputSchema> =>
-            value[innerKey as unknown as keyof typeof value] as z.input<typeof outputSchema>,
-        encode: (value: z.input<typeof outputSchema>): z.output<typeof wrapperSchema> =>
-            ({
-                [innerKey]: value,
-            }) as z.output<typeof wrapperSchema>,
-    });
-};

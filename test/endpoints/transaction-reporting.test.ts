@@ -122,31 +122,27 @@ describe("TransactionReportingEndpoints", () => {
                         includeStatistics: true,
                     },
                     serverResponse: {
-                        batchList: {
-                            batch: [
-                                {
-                                    batchId: "3214864",
-                                    settlementTimeUTC: "2016-01-18T08:15:30.000Z",
-                                    settlementTimeLocal: "2016-01-18T01:15:30.000Z",
-                                    settlementState: "settledSuccessfully",
-                                    paymentMethod: "creditCard",
-                                    statistics: {
-                                        statistic: [
-                                            {
-                                                accountType: "Visa",
-                                                chargeAmount: "318.00",
-                                                chargeCount: "3",
-                                                refundAmount: "50.00",
-                                                refundCount: "1",
-                                                voidCount: "0",
-                                                declineCount: "0",
-                                                errorCount: "0",
-                                            },
-                                        ],
+                        batchList: [
+                            {
+                                batchId: "3214864",
+                                settlementTimeUTC: "2016-01-18T08:15:30.000Z",
+                                settlementTimeLocal: "2016-01-18T01:15:30.000Z",
+                                settlementState: "settledSuccessfully",
+                                paymentMethod: "creditCard",
+                                statistics: [
+                                    {
+                                        accountType: "Visa",
+                                        chargeAmount: "318.00",
+                                        chargeCount: "3",
+                                        refundAmount: "50.00",
+                                        refundCount: "1",
+                                        voidCount: "0",
+                                        declineCount: "0",
+                                        errorCount: "0",
                                     },
-                                },
-                            ],
-                        },
+                                ],
+                            },
+                        ],
                     },
                     expectedDecoded: {
                         batchList: [
@@ -185,22 +181,20 @@ describe("TransactionReportingEndpoints", () => {
                     userInput: {},
                     expectedEncoded: {},
                     serverResponse: {
-                        transactions: {
-                            transaction: [
-                                {
-                                    transId: "2162566217",
-                                    submitTimeUTC: "2011-09-01T16:30:49Z",
-                                    submitTimeLocal: "2011-09-01T10:30:49Z",
-                                    transactionStatus: "authorizedPendingCapture",
-                                    invoiceNumber: "60",
-                                    firstName: "Ellen",
-                                    accountType: "MasterCard",
-                                    accountNumber: "XXXX0015",
-                                    settleAmount: "1018.88",
-                                    hasReturnedItems: false,
-                                },
-                            ],
-                        },
+                        transactions: [
+                            {
+                                transId: "2162566217",
+                                submitTimeUTC: "2011-09-01T16:30:49Z",
+                                submitTimeLocal: "2011-09-01T10:30:49Z",
+                                transactionStatus: "authorizedPendingCapture",
+                                invoiceNumber: "60",
+                                firstName: "Ellen",
+                                accountType: "MasterCard",
+                                accountNumber: "XXXX0015",
+                                settleAmount: "1018.88",
+                                hasReturnedItems: false,
+                            },
+                        ],
                     },
                     expectedDecoded: {
                         transactions: [
@@ -242,20 +236,18 @@ describe("TransactionReportingEndpoints", () => {
                             settlementTimeLocal: "2011-09-01T10:38:54.000Z",
                             settlementState: "settledSuccessfully",
                             paymentMethod: "creditCard",
-                            statistics: {
-                                statistic: [
-                                    {
-                                        accountType: "Visa",
-                                        chargeAmount: "318.00",
-                                        chargeCount: "3",
-                                        refundAmount: "50.00",
-                                        refundCount: "1",
-                                        voidCount: "0",
-                                        declineCount: "0",
-                                        errorCount: "0",
-                                    },
-                                ],
-                            },
+                            statistics: [
+                                {
+                                    accountType: "Visa",
+                                    chargeAmount: "318.00",
+                                    chargeCount: "3",
+                                    refundAmount: "50.00",
+                                    refundCount: "1",
+                                    voidCount: "0",
+                                    declineCount: "0",
+                                    errorCount: "0",
+                                },
+                            ],
                         },
                     },
                     expectedDecoded: {
@@ -294,26 +286,18 @@ describe("TransactionReportingEndpoints", () => {
                     expectedEncoded: {},
                     serverResponse: {
                         isTestMode: true,
-                        processors: {
-                            processor: {
+                        processors: [
+                            {
                                 name: "TEST_PROCESSOR",
                                 id: "1",
                             },
-                        },
+                        ],
                         merchantName: "Test Merchant",
                         gatewayId: "123456",
-                        marketTypes: {
-                            marketType: "eCommerce",
-                        },
-                        productCodes: {
-                            productCode: "CNP",
-                        },
-                        paymentMethods: {
-                            paymentMethod: ["Visa"],
-                        },
-                        currencies: {
-                            currency: ["USD"],
-                        },
+                        marketTypes: ["eCommerce"],
+                        productCodes: ["CNP"],
+                        paymentMethods: ["Visa"],
+                        currencies: ["USD"],
                     },
                     expectedDecoded: {
                         isTestMode: true,
@@ -348,13 +332,13 @@ describe("TransactionReportingEndpoints", () => {
                         month: "2025-01",
                     },
                     serverResponse: {
-                        auSummary: {
-                            auResponse: {
+                        auSummary: [
+                            {
                                 auReasonCode: "CARD_UPDATED",
                                 profileCount: "5",
                                 reasonDescription: "Card has been updated",
                             },
-                        },
+                        ],
                     },
                     expectedDecoded: {
                         auSummary: [
