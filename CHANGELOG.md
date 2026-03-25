@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.3...v1.0.4) (2026-03-25)
+
+
+### Bug Fixes
+
+* nest request body under root key for valid Authorize.Net JSON ([f70eebc](https://github.com/DASPRiD/better-authorize-net/commit/f70eebc60ba2b4004ee2c30cf7d053a56696e3d1))
+
 ## [1.0.3](https://github.com/DASPRiD/better-authorize-net/compare/v1.0.2...v1.0.3) (2026-01-22)
 
 
